@@ -1,0 +1,186 @@
+/* Variables de tu sistema de diseño (Modo Claro) */
+:root {
+  --color-primary: #7c3aed;
+  --color-primary-hover: #6d28d9;
+  --color-secondary: #d97706;
+  --color-surface: #ffffff;
+  --color-surface-container: #f9fafb;
+  --color-border: #e5e7eb;
+  --color-on-surface: #111827;
+  --color-on-surface-variant: #4b5563;
+  --radius-card: 12px;
+  --radius-btn: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  line-height: 1.5;
+}
+
+/* Barra de navegación */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background-color: var(--color-surface-container);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.navbar-logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: var(--color-on-surface-variant);
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: var(--radius-btn);
+}
+
+.navbar-links a:hover,
+.navbar-links a.activo {
+  color: var(--color-primary);
+  background-color: #ede9fe;
+}
+
+/* Contenedor general */
+.contenedor {
+  max-width: 1100px;
+  margin: 32px auto;
+  padding: 0 24px;
+}
+
+.cabecera-seccion {
+  margin-bottom: 24px;
+}
+
+.cabecera-seccion h1 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.cabecera-seccion p {
+  color: var(--color-on-surface-variant);
+}
+
+/* Grid de tarjetas (para el listado) */
+.grid-campanas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+/* Componente Card / Action */
+.card {
+  background-color: var(--color-surface-container);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.card h2 {
+  font-size: 1.25rem;
+}
+
+.card-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background-color: #ede9fe;
+  color: var(--color-primary);
+}
+
+.badge-secundario {
+  background-color: #fef3c7;
+  color: var(--color-secondary);
+}
+
+/* Botones */
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  border: none;
+  border-radius: var(--radius-btn);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-primario {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn-primario:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-secundario {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-on-surface);
+  margin-bottom: 20px;
+}
+
+.btn-secundario:hover {
+  background-color: var(--color-surface-container);
+}
+
+/* Vista de detalle (Opción A) */
+.detalle-panel {
+  background-color: var(--color-surface-container);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detalle-datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  padding: 16px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+}
+
+.caja-accion {
+  padding: 16px;
+  background-color: #ede9fe;
+  border-left: 4px solid var(--color-primary);
+  border-radius: 4px;
+}
