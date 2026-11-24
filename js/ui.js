@@ -92,3 +92,15 @@ export function renderDetalle(contenedor, campana, personaje, onVolver) {
   panel.append(meta, titulo, sinopsis, bloqueDatos, cajaAccion);
   contenedor.append(btnVolver, panel);
 }
+
+export function renderEnConstruccion(contenedor, titulo, descripcion) {
+  contenedor.replaceChildren();
+
+  const cabecera = crearElemento('div', 'cabecera-seccion');
+  cabecera.append(
+    crearElemento('h1', '', titulo),
+    crearElemento('p', '', descripcion)
+  );
+
+  contenedor.append(cabecera);
+}
