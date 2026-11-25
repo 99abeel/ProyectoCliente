@@ -1,10 +1,13 @@
-import { obtenerTodos, obtenerPorId } from './almacen.js';
+import { obtenerTodos, obtenerPorId, borrar } from './almacen.js';
 import { renderListado, renderDetalle, renderEnConstruccion } from './ui.js';
+import { renderFormularioRegistro } from './registro.js';
+import { renderUsuarios } from './usuarios.js';
 
 const app = document.querySelector('#app');
 const enlacesMenu = document.querySelectorAll('[data-vista]');
 
 let vistaActual = 'campanas';
+let usuarioEnEdicion = null;
 
 function actualizarMenuActivo(vista) {
   enlacesMenu.forEach((enlace) => {
@@ -37,9 +40,9 @@ function navegar(vista) {
   if (vista === 'campanas') {
     mostrarListado();
   } else if (vista === 'registro') {
-    renderEnConstruccion(app, 'Registro de usuario', 'Aquí irá el formulario de alta y edición.');
+    mostrarRegistro();
   } else if (vista === 'usuarios') {
-    renderEnConstruccion(app, 'Usuarios', 'Aquí aparecerán los usuarios registrados.');
+    mostrarUsuarios();
   } else if (vista === 'contacto') {
     renderEnConstruccion(app, 'Contacto', 'Aquí irá el formulario de contacto.');
   } else if (vista === 'mensajes') {
@@ -47,9 +50,56 @@ function navegar(vista) {
   }
 }
 
+function mostrarRegistro(mensajeExito = '') {
+  renderFormularioRegistro(app, {
+    usuarioAEditar: usuarioEnEdicion,
+    mensajeExito,
+    onGuardado: (textoExito) => {
+      usuarioEnEdicion = null;
+      mostrarRegistro(textoExito);
+    },
+    onCancelarEdicion: () => {
+      usuarioEnEdicion = null;
+      mostrarRegistro();
+    }
+  });
+}
+
+function mostrarUsuarios() {
+  const usuarios = obtenerTodos('usuarios');
+  renderUsuarios(app, usuarios, {
+    onEditar: (id) => {
+      const usuario = obtenerPorId('usuarios', id);
+      if (!usuario) {
+        return;
+      }
+      usuarioEnEdicion = usuario;
+      navegar('registro');
+    },
+    onBorrar: (id) => {
+      const usuario = obtenerPorId('usuarios', id);
+      if (!usuario) {
+        return;
+      }
+      const confirmado = confirm(`¿Seguro que quieres borrar al usuario "${usuario.usuario}"?`);
+      if (!confirmado) {
+        return;
+      }
+      borrar('usuarios', id);
+      if (usuarioEnEdicion && usuarioEnEdicion.id === id) {
+        usuarioEnEdicion = null;
+      }
+      mostrarUsuarios();
+    }
+  });
+}
+
 enlacesMenu.forEach((enlace) => {
   enlace.addEventListener('click', (e) => {
     e.preventDefault();
+    if (enlace.dataset.vista === 'registro') {
+      usuarioEnEdicion = null;
+    }
     navegar(enlace.dataset.vista);
   });
 });
