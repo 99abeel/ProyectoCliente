@@ -69,3 +69,15 @@ export function borrar(coleccion, id) {
   guardarColeccion(coleccion, nuevaLista);
   return true;
 }
+
+export function guardarUltimoContacto({ nombre, email }) {
+  localStorage.setItem(clave('ultimo_contacto'), JSON.stringify({ nombre, email }));
+}
+
+export function obtenerUltimoContacto() {
+  const texto = localStorage.getItem(clave('ultimo_contacto'));
+  if (!texto) {
+    return null;
+  }
+  return JSON.parse(texto);
+}

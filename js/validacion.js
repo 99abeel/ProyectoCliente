@@ -114,7 +114,7 @@ export function validarMotivo(valor) {
   return null;
 }
 
-export function validarMensaje(valor, min = 10, max = 300) {
+export function validarMensaje(valor, min = 10, max = 500) {
   const texto = valor.trim();
   if (!texto) {
     return 'El mensaje es obligatorio.';
