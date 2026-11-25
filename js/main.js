@@ -1,7 +1,9 @@
 import { obtenerTodos, obtenerPorId, borrar } from './almacen.js';
-import { renderListado, renderDetalle, renderEnConstruccion } from './ui.js';
+import { renderListado, renderDetalle } from './ui.js';
 import { renderFormularioRegistro } from './registro.js';
 import { renderUsuarios } from './usuarios.js';
+import { renderFormularioContacto } from './contacto.js';
+import { renderMensajes } from './mensajes.js';
 
 const app = document.querySelector('#app');
 const enlacesMenu = document.querySelectorAll('[data-vista]');
@@ -44,9 +46,9 @@ function navegar(vista) {
   } else if (vista === 'usuarios') {
     mostrarUsuarios();
   } else if (vista === 'contacto') {
-    renderEnConstruccion(app, 'Contacto', 'Aquí irá el formulario de contacto.');
+    mostrarContacto();
   } else if (vista === 'mensajes') {
-    renderEnConstruccion(app, 'Mensajes enviados', 'Aquí aparecerán los mensajes guardados.');
+    mostrarMensajes();
   }
 }
 
@@ -90,6 +92,28 @@ function mostrarUsuarios() {
         usuarioEnEdicion = null;
       }
       mostrarUsuarios();
+    }
+  });
+}
+
+function mostrarContacto() {
+  renderFormularioContacto(app);
+}
+
+function mostrarMensajes() {
+  const mensajes = obtenerTodos('mensajes');
+  renderMensajes(app, mensajes, {
+    onBorrar: (id) => {
+      const mensaje = obtenerPorId('mensajes', id);
+      if (!mensaje) {
+        return;
+      }
+      const confirmado = confirm(`¿Seguro que quieres borrar el mensaje de "${mensaje.nombre}"?`);
+      if (!confirmado) {
+        return;
+      }
+      borrar('mensajes', id);
+      mostrarMensajes();
     }
   });
 }
